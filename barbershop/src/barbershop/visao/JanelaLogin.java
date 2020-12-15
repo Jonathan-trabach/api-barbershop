@@ -137,8 +137,10 @@ public class JanelaLogin extends javax.swing.JFrame {
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                //validação para verificar se o usuario esta cadastrado
-                CIH_Login.consultar(jTextFieldUsuario.getText(), jPasswordField.getText());
+                boolean autenticado = CIH_Login.consultar(jTextFieldUsuario.getText(), jPasswordField.getText());
+                if(autenticado){
+                    this.dispose();
+                }
             } catch (Exception ex) {
                 Logger.getLogger(JanelaLogin.class.getName()).log(Level.SEVERE, null, ex);
             }

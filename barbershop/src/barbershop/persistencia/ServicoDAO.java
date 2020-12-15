@@ -2,9 +2,12 @@
 package barbershop.persistencia;
 
 import barbershop.modelo.Servico;
-import static barbershop.persistencia.UsuarioDAO.conexao;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ServicoDAO {
@@ -40,4 +43,29 @@ public class ServicoDAO {
         conexao.conectar();
     }
     
+    public static List<Servico> buscarServicos() throws Exception{
+        String sql;
+        List<Servico> listaServicos = new ArrayList<>();
+        try {
+            sql = "select nome , preco from servico ";
+            PreparedStatement ps;
+            ps = conexao.con.prepareStatement(sql);
+           
+            ResultSet rs;
+            rs = ps.executeQuery();
+            
+           while (rs.next()) {
+               Servico servico = new Servico();
+               servico.nomeServico = rs.getString("nome");
+               servico.precoServico = rs.getString("preco");
+               
+               listaServicos.add(servico);
+           }
+            
+            return listaServicos;
+        } catch (SQLException ex) {
+            System.err.println("Falha ao pesquisar serviços !!!");
+            throw new Exception(ex.getMessage());
+        }
+    }
 }
