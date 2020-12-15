@@ -5,13 +5,12 @@ import barbershop.servico.ServicoServico;
 
 public class CIH_Servico {
     
-    public static int criarServico(String nome, String preco){
+    public static void criarServico(String nome, String preco) throws Exception{
         Servico s = new Servico();
         s.nomeServico = nome;
         s.precoServico = preco;
         
         ServicoServico.salvarServico(s);
         
-        return 0;
     }
 }

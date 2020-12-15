@@ -68,7 +68,7 @@ public class UsuarioDAO {
     }
     
     private static void validarCampos(String nome,String senha,String cpf) throws Exception{
-        if(nome.equals("") || nome.length() > 3 || senha.equals("") || senha.length() > 3 || cpf.equals("") || cpf.length() > 5){
+        if(nome.equals("") || nome.length() < 3 || senha.equals("") || senha.length() < 3 || cpf.equals("") || cpf.length() < 5){
             JOptionPane.showMessageDialog(null, "Os campos devem estar preenchidos corretamentes !");
             throw new Exception("Campos Nulos");
         }

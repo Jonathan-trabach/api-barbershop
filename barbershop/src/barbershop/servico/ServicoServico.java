@@ -5,8 +5,8 @@ import barbershop.persistencia.ServicoDAO;
 
 public class ServicoServico {
     
-    public static int salvarServico(Servico s){
-        return ServicoDAO.inserirServico(s);
+    public static void salvarServico(Servico s) throws Exception{
+        ServicoDAO.inserirServico(s);
     }
     
 }

@@ -2,30 +2,42 @@
 package barbershop.persistencia;
 
 import barbershop.modelo.Servico;
-import java.sql.Connection;
+import static barbershop.persistencia.UsuarioDAO.conexao;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ServicoDAO {
     
-    public static int inserirServico(Servico s){
-//        
-//        Connection c = Conexao.conectar();
-//        try { 
-//            Statement stmt=c.createStatement();
-//           
-//                    stmt.executeUpdate("INSERT INTO barbershop.servico (nome,preco) values('"+s.nomeServico+"','"+s.precoServico+"')");
-//                    JOptionPane.showMessageDialog(null, "salvo com sucesso");
-//                    
-//                    return 1;
-//                    
-//        }catch (SQLException ex) {
-//            Logger.getLogger(EstabelecimentoDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        return -1;
+    public static Conexao conexao;
+    
+    public static void inserirServico(Servico s) throws Exception{
+        conexao.conectar();
+        
+        try { 
+            
+            validarCampos(s.nomeServico, s.precoServico);
+            Statement stmt = conexao.con.createStatement();
+           
+            stmt.executeUpdate("INSERT INTO servico (nome,preco) values('"+s.nomeServico+"','"+s.precoServico+"')");
+            JOptionPane.showMessageDialog(null, "salvo com sucesso");
+                          
+        }catch (SQLException ex) {
+            System.err.println("Falha ao Cadastrar serviço !!!");
+            throw new Exception(ex.getMessage());
+        }
+        
+    }
+    
+    private static void validarCampos(String nome,String preco) throws Exception{
+        if(nome.equals("") || nome.length() < 3 || preco.equals(0.00)){
+            JOptionPane.showMessageDialog(null, "Os campos devem estar preenchidos corretamentes !");
+            throw new Exception("Valores dos Campos sao Invalidos");
+        }
+    }
+        
+    public static void conectarAoBanco() throws Exception{
+        conexao.conectar();
     }
     
 }
