@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -80,5 +81,32 @@ public class AtendimentoDAO {
         }
     }
   
+         
+    public static void finalizarAtendimento(Atendimento atendimento) throws Exception{
+        Date dataFim = new Date();
+        Timestamp dataTimestamp = new Timestamp(dataFim.getTime());  
+        
+        String sql = "UPDATE atendimento SET fim = '" + dataTimestamp + "' WHERE ID = ? ";
+        PreparedStatement ps = conexao.con.prepareStatement(sql);
+        ps.setInt(1, atendimento.id);
+        ps.execute();
+        
+    }
+    
+    public static Atendimento recuperarPorId(String nomeCliente) throws SQLException{
+        Atendimento atendimento = new Atendimento();
+        
+        String sql = "SELECT * FROM atendimento WHERE nome_cliente = ?";
+        PreparedStatement ps = conexao.con.prepareStatement(sql);
+        ps.setString(1, nomeCliente);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            atendimento.id = rs.getInt("id");
+            atendimento.nome = rs.getString("nome_cliente");
+            atendimento.dataInicio = rs.getDate("inicio");
+        }
+        return atendimento;
+    }
     
 }

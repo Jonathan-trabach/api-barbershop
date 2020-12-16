@@ -4,6 +4,7 @@ import barbershop.modelo.Atendimento;
 import barbershop.modelo.Servico;
 import barbershop.servico.ServicoAtendimento;
 import barbershop.visao.JanelaAtendimento;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 public class CIH_Atendimento {
@@ -23,7 +24,16 @@ public class CIH_Atendimento {
       
     }
 
+    public static void finalizarAtendimento(Atendimento atendimento) throws Exception{
+        ServicoAtendimento.finalizarAtendimento(atendimento);
+    }
+    
     public static List<Servico> preencherComboBoxServico() throws Exception{
        return ServicoAtendimento.preencherComboBoxServico();
     }
+
+    public static Atendimento recuperarPorId(String nomeCliente) throws SQLException{
+        return ServicoAtendimento.recuperarPorId(nomeCliente);
+    }
+
 }

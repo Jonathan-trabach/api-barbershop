@@ -4,9 +4,7 @@ import barbershop.controlador.CIH_Atendimento;
 import barbershop.controlador.CIH_Principal;
 import barbershop.modelo.Atendimento;
 import barbershop.persistencia.AtendimentoDAO;
-import barbershop.servico.ServicoAtendimento;
-import java.util.ArrayList;
-import java.util.Date;
+import java.awt.Color;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,13 +78,17 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableFila.setEnabled(false);
+        jTableFila.getTableHeader().setReorderingAllowed(false);
         jTableFila.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableFilaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTableFila);
+        if (jTableFila.getColumnModel().getColumnCount() > 0) {
+            jTableFila.getColumnModel().getColumn(0).setResizable(false);
+            jTableFila.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         jButton2.setBackground(new java.awt.Color(255, 51, 51));
         jButton2.setText("Cancelado");
@@ -106,6 +108,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jButton4.setBackground(new java.awt.Color(0, 153, 153));
         jButton4.setText("Finalizado");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -185,16 +192,40 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            
+            final int row = jTableFila.getSelectedRow();
+            final int column = jTableFila.getSelectedColumn();
+            final String valueInCell = (String)jTableFila.getValueAt(row, column);
+
+            Atendimento atendimento = CIH_Atendimento.recuperarPorId(valueInCell);
+            
+            CIH_Atendimento.finalizarAtendimento(atendimento);
+            
+            JOptionPane.showMessageDialog(null, "Finalizado com sucesso");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private void carregarGrade() {
         DefaultTableModel defaultTableModel = new DefaultTableModel(new Object[]{"HORA", "CLIENTE", "SERVICO"}, 0);
         
         for(int i = 0;i < atendimentos.size(); i++){
+       
+            if(atendimentos.get(i).nome.equals("Derione")){
+                
+            }
+            
             Object linha[] = new Object[]{
                     atendimentos.get(i).dataInicio.toString(),
                     atendimentos.get(i).nome,
                     atendimentos.get(i).idServico};
            
            defaultTableModel.addRow(linha);
+           jTableFila.setBackground(Color.red);
         }
         jTableFila.setModel(defaultTableModel);
         jTableFila.getColumnModel().getColumn(0).setPreferredWidth(100);

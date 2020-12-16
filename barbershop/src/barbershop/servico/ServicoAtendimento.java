@@ -3,6 +3,7 @@ package barbershop.servico;
 import barbershop.modelo.Atendimento;
 import barbershop.modelo.Servico;
 import barbershop.persistencia.AtendimentoDAO;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,4 +24,12 @@ public class ServicoAtendimento {
         return AtendimentoDAO.buscarAtendimentos();
     }
     
+    public static void finalizarAtendimento(Atendimento atendimento) throws Exception{
+        AtendimentoDAO.finalizarAtendimento(atendimento);
+    }
+
+    public static Atendimento recuperarPorId(String nomeCliente) throws SQLException{
+        return AtendimentoDAO.recuperarPorId(nomeCliente);
+    }
+
 }
