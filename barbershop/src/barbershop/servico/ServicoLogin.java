@@ -19,8 +19,8 @@ public class ServicoLogin {
        return autenticado;
     }
     
-    public static void criarUsuario(String nome,String senha,String cpf) throws Exception{
-        UsuarioDAO.criarUsuario(nome, senha, cpf);
+    public static void criarUsuario(String nome,String senha) throws Exception{
+        UsuarioDAO.criarUsuario(nome, senha);
     }
  
 }

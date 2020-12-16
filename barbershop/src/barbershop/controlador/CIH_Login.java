@@ -13,7 +13,7 @@ public class CIH_Login {
        return ServicoLogin.consultar(nome_acesso, senha_acesso);
     }
     
-    public static void criarUsuario(String nome,String senha,String cpf) throws Exception{
-        ServicoLogin.criarUsuario(nome,senha,cpf);
+    public static void criarUsuario(String nome,String senha) throws Exception{
+        ServicoLogin.criarUsuario(nome,senha);
     }
 }

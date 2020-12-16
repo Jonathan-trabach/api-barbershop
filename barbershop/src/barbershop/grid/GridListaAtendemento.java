@@ -29,7 +29,7 @@ public class GridListaAtendemento extends AbstractTableModel {
             case 0:
                 return atendimento.dataInicio;
             case 1:
-                return atendimento.nome;
+                return atendimento.idCliente;
             case 2:
                 return atendimento.idServico;
             default:

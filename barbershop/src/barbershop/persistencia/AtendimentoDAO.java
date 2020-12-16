@@ -1,6 +1,7 @@
 package barbershop.persistencia;
 
 import barbershop.modelo.Atendimento;
+import barbershop.modelo.Cliente;
 import barbershop.modelo.Servico;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,12 +21,11 @@ public class AtendimentoDAO {
      
         conexao.conectar();
         try { 
-            
-            validarCampos(atendimento.nome);
+       
             Statement stmt = conexao.con.createStatement();
            
             Timestamp dataTimestamp =new Timestamp(atendimento.dataInicio.getTime());  
-            stmt.executeUpdate("INSERT INTO atendimento (nome_cliente , inicio, idServico) values('"+atendimento.nome+"','"+dataTimestamp+"','"+atendimento.idServico+"')");
+            stmt.executeUpdate("INSERT INTO atendimento (id_cliente , inicio, idServico) values('"+atendimento.idCliente+"','"+dataTimestamp+"','"+atendimento.idServico+"')");
             JOptionPane.showMessageDialog(null, "salvo com sucesso");
                           
         }catch (SQLException ex) {
@@ -33,13 +33,6 @@ public class AtendimentoDAO {
             throw new Exception(ex.getMessage());
         }
         
-    }
-    
-    private static void validarCampos(String nome) throws Exception{
-        if(nome.equals("") || nome.length() < 3){
-            JOptionPane.showMessageDialog(null, "Os campos devem estar preenchidos corretamentes !");
-            throw new Exception("Valores dos Campos sao Invalidos");
-        }
     }
         
     public static void conectarAoBanco() throws Exception{
@@ -52,11 +45,15 @@ public class AtendimentoDAO {
         
     }
     
+    public static List<Cliente> preencherComboBoxCliente() throws Exception{
+        return ClienteDAO.buscarClientes();
+    }
+    
      public static List<Atendimento> buscarAtendimentos() throws Exception{
         String sql;
         List<Atendimento> listaAtendimentos = new ArrayList<>();
         try {
-            sql = "select nome_cliente , inicio , idServico "
+            sql = "select id_cliente , inicio , idServico "
                 + " from atendimento "
                 + " order by inicio";
             PreparedStatement ps;
@@ -67,7 +64,7 @@ public class AtendimentoDAO {
             
            while (rs.next()) {
                Atendimento atendimento = new Atendimento();
-               atendimento.nome = rs.getString("nome_cliente");
+               atendimento.idCliente = rs.getInt("id_cliente");
                atendimento.dataInicio = rs.getDate("inicio");
                atendimento.idServico = rs.getInt("idServico");
                
@@ -93,17 +90,17 @@ public class AtendimentoDAO {
         
     }
     
-    public static Atendimento recuperarPorId(String nomeCliente) throws SQLException{
+    public static Atendimento recuperarPorIdCliente(int idCliente) throws SQLException{
         Atendimento atendimento = new Atendimento();
         
-        String sql = "SELECT * FROM atendimento WHERE nome_cliente = ?";
+        String sql = "SELECT * FROM atendimento WHERE id_cliente = ?";
         PreparedStatement ps = conexao.con.prepareStatement(sql);
-        ps.setString(1, nomeCliente);
+        ps.setInt(1, idCliente);
         ResultSet rs = ps.executeQuery();
         
         if (rs.next()) {
             atendimento.id = rs.getInt("id");
-            atendimento.nome = rs.getString("nome_cliente");
+            atendimento.idCliente = rs.getInt("id_cliente");
             atendimento.dataInicio = rs.getDate("inicio");
         }
         return atendimento;

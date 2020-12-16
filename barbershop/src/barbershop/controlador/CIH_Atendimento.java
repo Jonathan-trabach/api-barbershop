@@ -1,6 +1,7 @@
 package barbershop.controlador;
 
 import barbershop.modelo.Atendimento;
+import barbershop.modelo.Cliente;
 import barbershop.modelo.Servico;
 import barbershop.servico.ServicoAtendimento;
 import barbershop.visao.JanelaAtendimento;
@@ -14,9 +15,9 @@ public class CIH_Atendimento {
         atendimento.setVisible(true);
     }
     
-    public static void cadastrarAtendimento(String nomeCliente, Date dataInicio, int idServico) throws Exception{
+    public static void cadastrarAtendimento(int idCliente, Date dataInicio, int idServico) throws Exception{
       Atendimento atendimento = new Atendimento();
-      atendimento.nome = nomeCliente;
+      atendimento.idCliente = idCliente;
       atendimento.dataInicio = dataInicio;
       atendimento.idServico = idServico;
         
@@ -31,9 +32,13 @@ public class CIH_Atendimento {
     public static List<Servico> preencherComboBoxServico() throws Exception{
        return ServicoAtendimento.preencherComboBoxServico();
     }
+ 
+    public static List<Cliente> preencherComboBoxCliente() throws Exception{
+       return ServicoAtendimento.preencherComboBoxCliente();
+    }
 
-    public static Atendimento recuperarPorId(String nomeCliente) throws SQLException{
-        return ServicoAtendimento.recuperarPorId(nomeCliente);
+    public static Atendimento recuperarPorIdCliente(int idCliente) throws SQLException{
+        return ServicoAtendimento.recuperarPorIdCliente(idCliente);
     }
 
 }

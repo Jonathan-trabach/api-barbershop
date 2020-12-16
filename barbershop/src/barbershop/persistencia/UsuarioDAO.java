@@ -49,15 +49,15 @@ public class UsuarioDAO {
         return autenticado;
     }
     
-    public static void criarUsuario(String nome,String senha, String cpf) throws Exception{
+    public static void criarUsuario(String nome,String senha) throws Exception{
         conexao.conectar();
         
         try { 
             
-            validarCampos(nome, senha, cpf);
+            validarCampos(nome, senha);
             Statement stmt = conexao.con.createStatement();
            
-            stmt.executeUpdate("INSERT INTO usuario (nome_acesso , senha_acesso, cpf) values('"+ nome +"','"+ senha +"','"+ cpf +"')");
+            stmt.executeUpdate("INSERT INTO usuario (nome_acesso , senha_acesso) values('"+ nome +"','"+ senha +"')");
             JOptionPane.showMessageDialog(null, "salvo com sucesso");
                           
         }catch (SQLException ex) {
@@ -67,8 +67,8 @@ public class UsuarioDAO {
         
     }
     
-    private static void validarCampos(String nome,String senha,String cpf) throws Exception{
-        if(nome.equals("") || nome.length() < 3 || senha.equals("") || senha.length() < 3 || cpf.equals("") || cpf.length() < 5){
+    private static void validarCampos(String nome,String senha) throws Exception{
+        if(nome.equals("") || nome.length() < 3 || senha.equals("") || senha.length() < 3 ){
             JOptionPane.showMessageDialog(null, "Os campos devem estar preenchidos corretamentes !");
             throw new Exception("Campos Nulos");
         }

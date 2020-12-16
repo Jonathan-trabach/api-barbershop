@@ -1,6 +1,7 @@
 package barbershop.servico;
 
 import barbershop.modelo.Atendimento;
+import barbershop.modelo.Cliente;
 import barbershop.modelo.Servico;
 import barbershop.persistencia.AtendimentoDAO;
 import java.sql.SQLException;
@@ -18,6 +19,10 @@ public class ServicoAtendimento {
     public static List<Servico> preencherComboBoxServico() throws Exception{
        return AtendimentoDAO.preencherComboBoxServico();
         
+    }  
+    
+    public static List<Cliente> preencherComboBoxCliente() throws Exception{
+       return AtendimentoDAO.preencherComboBoxCliente();
     }
     
     public static List<Atendimento> preecherListaAtendimento() throws Exception{
@@ -28,8 +33,7 @@ public class ServicoAtendimento {
         AtendimentoDAO.finalizarAtendimento(atendimento);
     }
 
-    public static Atendimento recuperarPorId(String nomeCliente) throws SQLException{
-        return AtendimentoDAO.recuperarPorId(nomeCliente);
+    public static Atendimento recuperarPorIdCliente(int idCliente) throws SQLException{
+        return AtendimentoDAO.recuperarPorIdCliente(idCliente);
     }
-
 }

@@ -1,6 +1,8 @@
 package barbershop.visao;
 
 import barbershop.controlador.CIH_Atendimento;
+import barbershop.controlador.CIH_Cliente;
+import barbershop.modelo.Cliente;
 import barbershop.modelo.Servico;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +14,7 @@ public class JanelaAtendimento extends javax.swing.JFrame {
     public JanelaAtendimento() {
         initComponents();
         preecnherComboBoxServico();
+        preecnherComboBoxClientes();
         this.setLocationRelativeTo(null);
     }
 
@@ -22,7 +25,6 @@ public class JanelaAtendimento extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldNomeCliente = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jComboBoxServico = new javax.swing.JComboBox<>();
@@ -30,6 +32,7 @@ public class JanelaAtendimento extends javax.swing.JFrame {
         jFormattedTextFieldMinutos = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jComboBoxClientes = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,6 +76,13 @@ public class JanelaAtendimento extends javax.swing.JFrame {
 
         jLabel5.setText("min");
 
+        jComboBoxClientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxClientesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,9 +95,7 @@ public class JanelaAtendimento extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextFieldNomeCliente)
-                        .addComponent(jComboBoxServico, 0, 209, Short.MAX_VALUE))
+                    .addComponent(jComboBoxServico, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jFormattedTextFieldHora, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -95,7 +103,8 @@ public class JanelaAtendimento extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jFormattedTextFieldMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)))
+                        .addComponent(jLabel5))
+                    .addComponent(jComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(155, Short.MAX_VALUE)
@@ -109,8 +118,8 @@ public class JanelaAtendimento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -147,7 +156,7 @@ public class JanelaAtendimento extends javax.swing.JFrame {
         horaInicio.setSeconds(00);
         
         try {
-            CIH_Atendimento.cadastrarAtendimento(jTextFieldNomeCliente.getText(), horaInicio, jComboBoxServico.getSelectedIndex() + 1);
+            CIH_Atendimento.cadastrarAtendimento(jComboBoxClientes.getSelectedIndex() + 1, horaInicio, jComboBoxServico.getSelectedIndex() + 1);
             this.dispose();
         } catch (Exception ex) {
             Logger.getLogger(JanelaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
@@ -162,6 +171,10 @@ public class JanelaAtendimento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldHoraActionPerformed
 
+    private void jComboBoxClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxClientesActionPerformed
+
     private void preecnherComboBoxServico(){
         jComboBoxServico.removeAllItems();
         try {
@@ -175,9 +188,24 @@ public class JanelaAtendimento extends javax.swing.JFrame {
         }
     }
     
+    
+    private void preecnherComboBoxClientes(){
+        jComboBoxClientes.removeAllItems();
+        try {
+            List <Cliente> result = CIH_Atendimento.preencherComboBoxCliente();
+            for(Cliente c : result){
+                jComboBoxClientes.addItem(c.nome);
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(JanelaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBoxClientes;
     private javax.swing.JComboBox<String> jComboBoxServico;
     private javax.swing.JFormattedTextField jFormattedTextFieldHora;
     private javax.swing.JFormattedTextField jFormattedTextFieldMinutos;
@@ -186,7 +214,6 @@ public class JanelaAtendimento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextFieldNomeCliente;
     // End of variables declaration//GEN-END:variables
 
 

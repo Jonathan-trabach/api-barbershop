@@ -197,9 +197,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             
             final int row = jTableFila.getSelectedRow();
             final int column = jTableFila.getSelectedColumn();
-            final String valueInCell = (String)jTableFila.getValueAt(row, column);
+//            final String valueInCell = (int)jTableFila.getValueAt(row, column);
 
-            Atendimento atendimento = CIH_Atendimento.recuperarPorId(valueInCell);
+            Atendimento atendimento = CIH_Atendimento.recuperarPorIdCliente((int) jTableFila.getValueAt(row, column));
             
             CIH_Atendimento.finalizarAtendimento(atendimento);
             
@@ -214,18 +214,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         DefaultTableModel defaultTableModel = new DefaultTableModel(new Object[]{"HORA", "CLIENTE", "SERVICO"}, 0);
         
         for(int i = 0;i < atendimentos.size(); i++){
-       
-            if(atendimentos.get(i).nome.equals("Derione")){
-                
-            }
             
             Object linha[] = new Object[]{
                     atendimentos.get(i).dataInicio.toString(),
-                    atendimentos.get(i).nome,
+                    atendimentos.get(i).idCliente,
                     atendimentos.get(i).idServico};
            
            defaultTableModel.addRow(linha);
-           jTableFila.setBackground(Color.red);
         }
         jTableFila.setModel(defaultTableModel);
         jTableFila.getColumnModel().getColumn(0).setPreferredWidth(100);

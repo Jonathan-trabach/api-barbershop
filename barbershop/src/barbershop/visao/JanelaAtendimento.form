@@ -32,10 +32,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jTextFieldNomeCliente" max="32767" attributes="0"/>
-                      <Component id="jComboBoxServico" pref="209" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jComboBoxServico" min="-2" pref="209" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jFormattedTextFieldHora" min="-2" pref="59" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -45,6 +42,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jComboBoxClientes" min="-2" pref="209" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -62,8 +60,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jTextFieldNomeCliente" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBoxClientes" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -103,8 +101,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Servi&#xe7;o desejado :"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldNomeCliente">
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
@@ -166,6 +162,24 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="min"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxClientes">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxClientesActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
