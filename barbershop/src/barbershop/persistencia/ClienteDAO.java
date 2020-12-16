@@ -13,14 +13,14 @@ public class ClienteDAO {
 
     public static Conexao conexao;
 
-    public static void criarCliente(String nome,String email, String cpf) throws Exception{
+    public static void criarCliente(Cliente c) throws Exception{
         conexao.conectar();
         
         try { 
            
             Statement stmt = conexao.con.createStatement();
            
-            stmt.executeUpdate("INSERT INTO cliente (nome , email, cpf) values('"+ nome +"','"+ email +"','"+ cpf +"')");
+            stmt.executeUpdate("INSERT INTO cliente (nome , email, cpf) values('"+ c.nome +"','"+ c.email +"','"+ c.cpf +"')");
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
                           
         }catch (SQLException ex) {
