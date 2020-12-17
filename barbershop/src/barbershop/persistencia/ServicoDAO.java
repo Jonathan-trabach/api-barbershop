@@ -68,4 +68,33 @@ public class ServicoDAO {
             throw new Exception(ex.getMessage());
         }
     }
+
+     
+    public static Servico buscarServicoPorId(int id) throws Exception{
+        String sql;
+        Servico servico = new Servico();
+        try {
+            sql = "SELECT id, nome , preco FROM servico WHERE id = ?";
+            PreparedStatement ps;
+            ps = conexao.con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            ResultSet rs;
+            rs = ps.executeQuery();
+            
+           if(rs.next()) {
+               servico.id = rs.getInt("id");
+               servico.nomeServico = rs.getString("nome");
+               servico.precoServico = rs.getString("preco");
+              
+           }
+            
+            return servico;
+        } catch (SQLException ex) {
+            System.err.println("Falha ao pesquisar o serviço !!!");
+            throw new Exception(ex.getMessage());
+        }
+    }
+
 }
+

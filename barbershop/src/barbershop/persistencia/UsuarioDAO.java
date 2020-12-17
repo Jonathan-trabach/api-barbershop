@@ -1,5 +1,6 @@
 package barbershop.persistencia;
 
+import barbershop.modelo.Usuario;
 import barbershop.visao.JanelaPrincipal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,6 +77,10 @@ public class UsuarioDAO {
     
     public static void conectarAoBanco() throws Exception{
         conexao.conectar();
+    }
+
+    public void inserir(Usuario objeto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -33,7 +33,6 @@ public class ClienteDAO {
         conexao.conectar();
     }
     
-    
     public static List<Cliente> buscarClientes() throws Exception{
         String sql;
         List<Cliente> listaClientes = new ArrayList<>();
@@ -55,7 +54,32 @@ public class ClienteDAO {
             
             return listaClientes;
         } catch (SQLException ex) {
-            System.err.println("Falha ao pesquisar serviços !!!");
+            System.err.println("Falha ao pesquisar clientes !!!");
+            throw new Exception(ex.getMessage());
+        }
+    }
+    
+    public static Cliente buscarClientePorId(int id) throws Exception{
+        String sql;
+        Cliente cliente = new Cliente();
+        try {
+            sql = "SELECT id, nome , email FROM cliente  where id = ?";
+            PreparedStatement ps;
+            ps = conexao.con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            ResultSet rs;
+            rs = ps.executeQuery();
+            
+           if(rs.next()) {
+               cliente.id = rs.getInt("id");
+               cliente.nome = rs.getString("nome");
+               cliente.email = rs.getString("email");
+           }
+            
+            return cliente;
+        } catch (SQLException ex) {
+            System.err.println("Falha ao pesquisar o cliente !!!");
             throw new Exception(ex.getMessage());
         }
     }

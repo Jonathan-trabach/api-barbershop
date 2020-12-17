@@ -5,6 +5,7 @@ import barbershop.controlador.CIH_Cliente;
 import barbershop.controlador.CIH_Principal;
 import barbershop.modelo.Atendimento;
 import barbershop.persistencia.AtendimentoDAO;
+import barbershop.servico.ServicoPreencherGridInicial;
 import java.awt.Color;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,15 +15,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
-    List<Atendimento> atendimentos;
+  
     
     public JanelaPrincipal() throws Exception {
         initComponents();
         
         this.setLocationRelativeTo(null);
-        
-        atendimentos = AtendimentoDAO.buscarAtendimentos();
-        carregarGrade();
+        ServicoPreencherGridInicial.preecherGridAtendimento(jTableFila);
     }
 
     @SuppressWarnings("unchecked")
@@ -34,8 +33,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFila = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -62,14 +59,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "HORA", "CLIENTE", "SERVIÇO"
+                "HORA", "CLIENTE", "SERVIÇO", "STATUS"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -89,27 +86,17 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableFila);
         if (jTableFila.getColumnModel().getColumnCount() > 0) {
             jTableFila.getColumnModel().getColumn(0).setResizable(false);
+            jTableFila.getColumnModel().getColumn(0).setHeaderValue("HORA");
+            jTableFila.getColumnModel().getColumn(1).setResizable(false);
+            jTableFila.getColumnModel().getColumn(1).setHeaderValue("CLIENTE");
             jTableFila.getColumnModel().getColumn(2).setResizable(false);
+            jTableFila.getColumnModel().getColumn(2).setHeaderValue("SERVIÇO");
+            jTableFila.getColumnModel().getColumn(3).setResizable(false);
+            jTableFila.getColumnModel().getColumn(3).setHeaderValue("STATUS");
         }
 
-        jButton2.setBackground(new java.awt.Color(255, 51, 51));
-        jButton2.setText("Cancelado");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setBackground(new java.awt.Color(51, 153, 0));
-        jButton3.setText("Atualmente");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jButton4.setBackground(new java.awt.Color(0, 153, 153));
-        jButton4.setText("Finalizado");
+        jButton4.setText("Finalizar atendimento");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -121,36 +108,33 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(83, 83, 83)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(354, 354, 354)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+                        .addGap(48, 48, 48)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jButton1)
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton2)
-                        .addGap(53, 53, 53)
-                        .addComponent(jButton3)
-                        .addGap(55, 55, 55)
-                        .addComponent(jButton4))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton4)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -192,25 +176,18 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CIH_Atendimento.exibirJanelaAtendimento();
+        CIH_Atendimento.objetoTabelaAtendimento(jTableFila);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
             
             final int row = jTableFila.getSelectedRow();
             final int column = jTableFila.getSelectedColumn();
-//            final String valueInCell = (int)jTableFila.getValueAt(row, column);
 
-            Atendimento atendimento = CIH_Atendimento.recuperarPorIdCliente((int) jTableFila.getValueAt(row, column));
+            Atendimento atendimento = CIH_Atendimento.recuperarPorNomeCliente((String) jTableFila.getValueAt(row, column));
             
+            CIH_Atendimento.objetoTabelaAtendimento(jTableFila);
             CIH_Atendimento.finalizarAtendimento(atendimento);
             
             JOptionPane.showMessageDialog(null, "Finalizado com sucesso");
@@ -224,29 +201,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         CIH_Principal.exibirJanelaCliente();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void carregarGrade() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new Object[]{"HORA", "CLIENTE", "SERVICO"}, 0);
-        
-        for(int i = 0;i < atendimentos.size(); i++){
-            
-            Object linha[] = new Object[]{
-                    atendimentos.get(i).dataInicio.toString(),
-                    atendimentos.get(i).idCliente,
-                    atendimentos.get(i).idServico};
-           
-           defaultTableModel.addRow(linha);
-        }
-        jTableFila.setModel(defaultTableModel);
-        jTableFila.getColumnModel().getColumn(0).setPreferredWidth(100);
-        jTableFila.getColumnModel().getColumn(1).setPreferredWidth(100);
-        jTableFila.getColumnModel().getColumn(2).setPreferredWidth(100);
-       
-    }
+  
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;

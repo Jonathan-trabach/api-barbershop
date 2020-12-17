@@ -1,7 +1,7 @@
 package barbershop.visao;
 
 import barbershop.controlador.CIH_Cliente;
-import barbershop.controlador.CIH_Login;
+import barbershop.modelo.Cliente;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +19,7 @@ public class JanelaCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldSenha = new javax.swing.JTextField();
+        jTextFieldEmail = new javax.swing.JTextField();
         jTextFieldCpf = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jTextFieldNome = new javax.swing.JTextField();
@@ -33,9 +33,9 @@ public class JanelaCliente extends javax.swing.JFrame {
 
         jLabel3.setText("CPF : ");
 
-        jTextFieldSenha.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldSenhaActionPerformed(evt);
+                jTextFieldEmailActionPerformed(evt);
             }
         });
 
@@ -79,7 +79,7 @@ public class JanelaCliente extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addGap(44, 44, 44)
                         .addComponent(jButton1))
-                    .addComponent(jTextFieldSenha, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(87, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -92,7 +92,7 @@ public class JanelaCliente extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -109,16 +109,21 @@ public class JanelaCliente extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            CIH_Cliente.criarCliente(jTextFieldNome.getText(), jTextFieldSenha.getText(), jTextFieldCpf.getText());
+            Cliente c = new Cliente();
+            c.nome = jTextFieldNome.getText();
+            c.email = jTextFieldEmail.getText();
+            c.cpf = jTextFieldCpf.getText();
+            
+            CIH_Cliente.criarCliente(c);
             this.dispose();
         } catch (Exception ex) {
             Logger.getLogger(JanelaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextFieldSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSenhaActionPerformed
+    private void jTextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailActionPerformed
        
-    }//GEN-LAST:event_jTextFieldSenhaActionPerformed
+    }//GEN-LAST:event_jTextFieldEmailActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
           this.dispose();
@@ -135,7 +140,7 @@ public class JanelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextFieldCpf;
+    private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldNome;
-    private javax.swing.JTextField jTextFieldSenha;
     // End of variables declaration//GEN-END:variables
 }

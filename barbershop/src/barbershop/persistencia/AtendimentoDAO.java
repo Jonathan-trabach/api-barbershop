@@ -25,7 +25,7 @@ public class AtendimentoDAO {
             Statement stmt = conexao.con.createStatement();
            
             Timestamp dataTimestamp =new Timestamp(atendimento.dataInicio.getTime());  
-            stmt.executeUpdate("INSERT INTO atendimento (id_cliente , inicio, idServico) values('"+atendimento.idCliente+"','"+dataTimestamp+"','"+atendimento.idServico+"')");
+            stmt.executeUpdate("INSERT INTO atendimento (id_cliente , inicio, idServico) values('"+atendimento.cliente.id+"','"+dataTimestamp+"','"+atendimento.servico.id+"')");
             JOptionPane.showMessageDialog(null, "salvo com sucesso");
                           
         }catch (SQLException ex) {
@@ -53,7 +53,7 @@ public class AtendimentoDAO {
         String sql;
         List<Atendimento> listaAtendimentos = new ArrayList<>();
         try {
-            sql = "select id_cliente , inicio , idServico "
+            sql = "select id_cliente , inicio , idServico , fim "
                 + " from atendimento "
                 + " order by inicio";
             PreparedStatement ps;
@@ -64,9 +64,11 @@ public class AtendimentoDAO {
             
            while (rs.next()) {
                Atendimento atendimento = new Atendimento();
-               atendimento.idCliente = rs.getInt("id_cliente");
-               atendimento.dataInicio = rs.getDate("inicio");
-               atendimento.idServico = rs.getInt("idServico");
+        
+               atendimento.setCliente(ClienteDAO.buscarClientePorId(rs.getInt("id_cliente")));
+               atendimento.dataInicio = rs.getTimestamp("inicio");
+               atendimento.setServico(ServicoDAO.buscarServicoPorId(rs.getInt("idServico")));
+               atendimento.dataFim = rs.getTimestamp("fim");
                
                listaAtendimentos.add(atendimento);
            }
@@ -90,17 +92,19 @@ public class AtendimentoDAO {
         
     }
     
-    public static Atendimento recuperarPorIdCliente(int idCliente) throws SQLException{
+    public static Atendimento recuperarPorNomeCliente(String nomeCliente) throws SQLException, Exception{
         Atendimento atendimento = new Atendimento();
         
-        String sql = "SELECT * FROM atendimento WHERE id_cliente = ?";
+        String sql = "SELECT * FROM atendimento a "
+                + " join cliente c on c.id = a.id_cliente "
+                + "WHERE c.nome = ?";
         PreparedStatement ps = conexao.con.prepareStatement(sql);
-        ps.setInt(1, idCliente);
+        ps.setString(1, nomeCliente);
         ResultSet rs = ps.executeQuery();
         
         if (rs.next()) {
             atendimento.id = rs.getInt("id");
-            atendimento.idCliente = rs.getInt("id_cliente");
+            atendimento.setCliente(ClienteDAO.buscarClientePorId(rs.getInt("id_cliente")));
             atendimento.dataInicio = rs.getDate("inicio");
         }
         return atendimento;

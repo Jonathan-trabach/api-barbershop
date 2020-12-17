@@ -33,7 +33,8 @@ public class ServicoAtendimento {
         AtendimentoDAO.finalizarAtendimento(atendimento);
     }
 
-    public static Atendimento recuperarPorIdCliente(int idCliente) throws SQLException{
-        return AtendimentoDAO.recuperarPorIdCliente(idCliente);
+    public static Atendimento recuperarPorNomeCliente(String nomeCliente) throws SQLException, Exception{
+        return AtendimentoDAO.recuperarPorNomeCliente(nomeCliente);
     }
+
 }

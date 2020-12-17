@@ -1,11 +1,10 @@
 package barbershop.modelo;
 
-import barbershop.modelo.Cliente;
 import java.util.ArrayList;
 
 public class Servico {
-    
- 
+
+    public int id; 
     public String nomeServico;
     public String precoServico;
     public static ArrayList<ObservadorServico> observadores = new ArrayList<ObservadorServico>() ;
@@ -21,5 +20,4 @@ public class Servico {
         }
     }
 
-    
 }
