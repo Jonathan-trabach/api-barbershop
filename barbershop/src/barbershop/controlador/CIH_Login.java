@@ -1,5 +1,6 @@
 package barbershop.controlador;
 
+import barbershop.modelo.Usuario;
 import barbershop.servico.ServicoLogin;
 import barbershop.visao.JanelaLogin;
 
@@ -13,7 +14,7 @@ public class CIH_Login {
        return ServicoLogin.consultar(nome_acesso, senha_acesso);
     }
     
-    public static void criarUsuario(String nome,String senha) throws Exception{
-        ServicoLogin.criarUsuario(nome,senha);
+    public static void criarUsuario(Usuario usuario) throws Exception{
+        ServicoLogin.criarUsuario(usuario);
     }
 }

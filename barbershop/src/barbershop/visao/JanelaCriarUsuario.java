@@ -1,6 +1,7 @@
 package barbershop.visao;
 
 import barbershop.controlador.CIH_Login;
+import barbershop.modelo.Usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -93,7 +94,11 @@ public class JanelaCriarUsuario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            CIH_Login.criarUsuario(jTextFieldNome.getText(), jTextFieldSenha.getText());
+            Usuario usuario= new Usuario();
+            usuario.nomeAcesso = jTextFieldNome.getText();
+            usuario.senhaAcesso = jTextFieldSenha.getText();
+            
+            CIH_Login.criarUsuario(usuario);
             this.dispose();
         } catch (Exception ex) {
             Logger.getLogger(JanelaCriarUsuario.class.getName()).log(Level.SEVERE, null, ex);

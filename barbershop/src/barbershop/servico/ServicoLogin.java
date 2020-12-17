@@ -1,6 +1,6 @@
 package barbershop.servico;
 
-import barbershop.persistencia.Conexao;
+import barbershop.modelo.Usuario;
 import barbershop.persistencia.UsuarioDAO;
 import barbershop.visao.JanelaLogin;
 import java.util.logging.Level;
@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 public class ServicoLogin {
           
+    static UsuarioDAO usuarioDAO = new UsuarioDAO();
+    
     public static boolean consultar(String nome_acesso, String senha_acesso){
         boolean autenticado = false;
         try {
@@ -19,8 +21,8 @@ public class ServicoLogin {
        return autenticado;
     }
     
-    public static void criarUsuario(String nome,String senha) throws Exception{
-        UsuarioDAO.criarUsuario(nome, senha);
+    public static void criarUsuario(Usuario usuario) throws Exception{
+       usuarioDAO.inserir(usuario);
     }
  
 }

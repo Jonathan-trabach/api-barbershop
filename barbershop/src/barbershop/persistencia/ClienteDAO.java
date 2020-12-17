@@ -9,26 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class ClienteDAO {
+public class ClienteDAO implements DAO<Cliente>{
 
     public static Conexao conexao;
 
-    public static void criarCliente(Cliente c) throws Exception{
-        conexao.conectar();
-        
-        try { 
-           
-            Statement stmt = conexao.con.createStatement();
-           
-            stmt.executeUpdate("INSERT INTO cliente (nome , email, cpf) values('"+ c.nome +"','"+ c.email +"','"+ c.cpf +"')");
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
-                          
-        }catch (SQLException ex) {
-            System.err.println("Falha ao Cadastrar cliente !!!");
-            throw new Exception(ex.getMessage());
-        }
-        
-    }
     public static void conectarAoBanco() throws Exception{
         conexao.conectar();
     }
@@ -82,5 +66,43 @@ public class ClienteDAO {
             System.err.println("Falha ao pesquisar o cliente !!!");
             throw new Exception(ex.getMessage());
         }
+    }
+
+    @Override
+    public void inserir(Cliente objeto) throws Exception {
+        conexao.conectar();
+        
+        try { 
+           
+            Statement stmt = conexao.con.createStatement();
+           
+            stmt.executeUpdate("INSERT INTO cliente (nome , email, cpf) values('"+ objeto.nome +"','"+ objeto.email +"','"+ objeto.cpf +"')");
+            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+                          
+        }catch (SQLException ex) {
+            System.err.println("Falha ao Cadastrar cliente !!!");
+            throw new Exception(ex.getMessage());
+        }
+        
+    }
+
+    @Override
+    public void alterar(Cliente objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void excluir(Cliente objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Cliente> listarTodos() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Cliente recuperar(int codigo) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

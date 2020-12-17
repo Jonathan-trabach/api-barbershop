@@ -13,9 +13,10 @@ public class ServicoPreencherGridInicial {
 
     static List<Atendimento> atendimentos;
     static JTable jTable = new JTable();
+    private static AtendimentoDAO atendimentoDAO = new AtendimentoDAO();
     
     public static void preecherGridAtendimento(JTable jTableFila) throws Exception{
-        atendimentos = AtendimentoDAO.buscarAtendimentos();
+        atendimentos = atendimentoDAO.listarTodos();
         carregarGrade(jTableFila);
       
     }

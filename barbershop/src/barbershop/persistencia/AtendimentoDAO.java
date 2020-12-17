@@ -13,45 +13,77 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class AtendimentoDAO {
+public class AtendimentoDAO implements DAO<Atendimento>{
     
     public static Conexao conexao;
-    
-    public static void cadastrarAtendimento(Atendimento atendimento) throws Exception{
-     
-        conexao.conectar();
-        try { 
-       
-            Statement stmt = conexao.con.createStatement();
-           
-            Timestamp dataTimestamp =new Timestamp(atendimento.dataInicio.getTime());  
-            stmt.executeUpdate("INSERT INTO atendimento (id_cliente , inicio, idServico) values('"+atendimento.cliente.id+"','"+dataTimestamp+"','"+atendimento.servico.id+"')");
-            JOptionPane.showMessageDialog(null, "salvo com sucesso");
-                          
-        }catch (SQLException ex) {
-            System.err.println("Falha ao Cadastrar atendimento !!!");
-            throw new Exception(ex.getMessage());
-        }
-        
-    }
-        
-    public static void conectarAoBanco() throws Exception{
-        conexao.conectar();
-    }
-    
+    private static ServicoDAO servicoDAO = new ServicoDAO();
     
     public static List<Servico> preencherComboBoxServico() throws Exception{
-        return ServicoDAO.buscarServicos();
+        return servicoDAO.listarTodos();
         
     }
     
     public static List<Cliente> preencherComboBoxCliente() throws Exception{
         return ClienteDAO.buscarClientes();
     }
-    
-     public static List<Atendimento> buscarAtendimentos() throws Exception{
+  
+    public static Atendimento recuperarPorNomeCliente(String nomeCliente) throws SQLException, Exception{
+        Atendimento atendimento = new Atendimento();
+        
+        String sql = "SELECT * FROM atendimento a "
+                + " join cliente c on c.id = a.id_cliente "
+                + "WHERE c.nome = ?";
+        PreparedStatement ps = conexao.con.prepareStatement(sql);
+        ps.setString(1, nomeCliente);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            atendimento.id = rs.getInt("id");
+            atendimento.setCliente(ClienteDAO.buscarClientePorId(rs.getInt("id_cliente")));
+            atendimento.dataInicio = rs.getDate("inicio");
+        }
+        return atendimento;
+    }
+
+    @Override
+    public void inserir(Atendimento objeto) throws Exception {
+        
+        conexao.conectar();
+        try { 
+       
+            Statement stmt = conexao.con.createStatement();
+           
+            Timestamp dataTimestamp =new Timestamp(objeto.dataInicio.getTime());  
+            stmt.executeUpdate("INSERT INTO atendimento (id_cliente , inicio, idServico) values('"+objeto.cliente.id+"','"+dataTimestamp+"','"+objeto.servico.id+"')");
+            JOptionPane.showMessageDialog(null, "salvo com sucesso");
+                          
+        }catch (SQLException ex) {
+            System.err.println("Falha ao Cadastrar atendimento !!!");
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void alterar(Atendimento objeto) throws Exception {
+        Date dataFim = new Date();
+        Timestamp dataTimestamp = new Timestamp(dataFim.getTime());  
+        
+        String sql = "UPDATE atendimento SET fim = '" + dataTimestamp + "' WHERE ID = ? ";
+        PreparedStatement ps = conexao.con.prepareStatement(sql);
+        ps.setInt(1, objeto.id);
+        ps.execute();
+        
+    }
+
+    @Override
+    public void excluir(Atendimento objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Atendimento> listarTodos() throws Exception {
         String sql;
-        List<Atendimento> listaAtendimentos = new ArrayList<>();
+        ArrayList<Atendimento> listaAtendimentos = new ArrayList<>();
         try {
             sql = "select id_cliente , inicio , idServico , fim "
                 + " from atendimento "
@@ -79,35 +111,10 @@ public class AtendimentoDAO {
             throw new Exception(ex.getMessage());
         }
     }
-  
-         
-    public static void finalizarAtendimento(Atendimento atendimento) throws Exception{
-        Date dataFim = new Date();
-        Timestamp dataTimestamp = new Timestamp(dataFim.getTime());  
-        
-        String sql = "UPDATE atendimento SET fim = '" + dataTimestamp + "' WHERE ID = ? ";
-        PreparedStatement ps = conexao.con.prepareStatement(sql);
-        ps.setInt(1, atendimento.id);
-        ps.execute();
-        
-    }
-    
-    public static Atendimento recuperarPorNomeCliente(String nomeCliente) throws SQLException, Exception{
-        Atendimento atendimento = new Atendimento();
-        
-        String sql = "SELECT * FROM atendimento a "
-                + " join cliente c on c.id = a.id_cliente "
-                + "WHERE c.nome = ?";
-        PreparedStatement ps = conexao.con.prepareStatement(sql);
-        ps.setString(1, nomeCliente);
-        ResultSet rs = ps.executeQuery();
-        
-        if (rs.next()) {
-            atendimento.id = rs.getInt("id");
-            atendimento.setCliente(ClienteDAO.buscarClientePorId(rs.getInt("id_cliente")));
-            atendimento.dataInicio = rs.getDate("inicio");
-        }
-        return atendimento;
+
+    @Override
+    public Atendimento recuperar(int codigo) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

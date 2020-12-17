@@ -6,9 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class UsuarioDAO {
+public class UsuarioDAO implements DAO<Usuario>{
 
     public static Conexao conexao;
     
@@ -49,16 +50,15 @@ public class UsuarioDAO {
         }
         return autenticado;
     }
-    
-    public static void criarUsuario(String nome,String senha) throws Exception{
+  
+    @Override
+    public void inserir(Usuario objeto) throws Exception {
         conexao.conectar();
         
         try { 
-            
-            validarCampos(nome, senha);
             Statement stmt = conexao.con.createStatement();
            
-            stmt.executeUpdate("INSERT INTO usuario (nome_acesso , senha_acesso) values('"+ nome +"','"+ senha +"')");
+            stmt.executeUpdate("INSERT INTO usuario (nome_acesso , senha_acesso) values('"+ objeto.nomeAcesso +"','"+ objeto.senhaAcesso +"')");
             JOptionPane.showMessageDialog(null, "salvo com sucesso");
                           
         }catch (SQLException ex) {
@@ -67,20 +67,25 @@ public class UsuarioDAO {
         }
         
     }
-    
-    private static void validarCampos(String nome,String senha) throws Exception{
-        if(nome.equals("") || nome.length() < 3 || senha.equals("") || senha.length() < 3 ){
-            JOptionPane.showMessageDialog(null, "Os campos devem estar preenchidos corretamentes !");
-            throw new Exception("Campos Nulos");
-        }
-    }
-    
-    public static void conectarAoBanco() throws Exception{
-        conexao.conectar();
-    }
 
-    public void inserir(Usuario objeto) {
+    @Override
+    public void alterar(Usuario objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public void excluir(Usuario objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Usuario> listarTodos() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Usuario recuperar(int codigo) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package barbershop.modelo;
 
 import barbershop.persistencia.AtendimentoDAO;
@@ -11,9 +6,10 @@ import javax.swing.JOptionPane;
 
 
 public class AtendimentoCombo extends Atendimento{
+    private static AtendimentoDAO atendimentoDAO = new AtendimentoDAO();
     
     public boolean criarComboParaDesconto () throws Exception {
-        List<Atendimento> buscarAtendimentos = AtendimentoDAO.buscarAtendimentos();
+        List<Atendimento> buscarAtendimentos = atendimentoDAO.listarTodos();
         int idClientePromocao = 1;
         for (Atendimento atendimento: buscarAtendimentos) {
             if (atendimento.cliente.id == idClientePromocao){

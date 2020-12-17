@@ -11,8 +11,10 @@ import java.util.logging.Logger;
 
 
 public class ServicoAtendimento {
+    private static AtendimentoDAO atendimentoDAO = new AtendimentoDAO();
+    
     public static void cadastrarAtendimento(Atendimento atendimento) throws Exception{
-        AtendimentoDAO.cadastrarAtendimento(atendimento);
+        atendimentoDAO.inserir(atendimento);
         
     }
     
@@ -26,11 +28,11 @@ public class ServicoAtendimento {
     }
     
     public static List<Atendimento> preecherListaAtendimento() throws Exception{
-        return AtendimentoDAO.buscarAtendimentos();
+        return atendimentoDAO.listarTodos();
     }
     
     public static void finalizarAtendimento(Atendimento atendimento) throws Exception{
-        AtendimentoDAO.finalizarAtendimento(atendimento);
+        atendimentoDAO.alterar(atendimento);
     }
 
     public static Atendimento recuperarPorNomeCliente(String nomeCliente) throws SQLException, Exception{

@@ -36,6 +36,9 @@ public class CIH_Atendimento {
 
     public static void finalizarAtendimento(Atendimento atendimento) throws Exception{
         ServicoAtendimento.finalizarAtendimento(atendimento);
+        if(jTableFila != null){
+            ServicoPreencherGridInicial.preecherGridAtendimento(objetoTabelaAtendimento(jTableFila));
+        }
     }
     
     public static List<Servico> preencherComboBoxServico() throws Exception{
