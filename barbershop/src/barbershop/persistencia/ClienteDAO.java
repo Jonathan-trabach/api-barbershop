@@ -103,6 +103,17 @@ public class ClienteDAO implements DAO<Cliente>{
 
     @Override
     public Cliente recuperar(int codigo) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cliente cliente = new Cliente();
+        
+        String sql = "SELECT * FROM cliente WHERE id = ?";
+        PreparedStatement ps = conexao.con.prepareStatement(sql);
+        ps.setInt(1, codigo);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            cliente.id = rs.getInt("id");
+            cliente.nome = rs.getString("nome");
+        }
+        return cliente;
     }
 }

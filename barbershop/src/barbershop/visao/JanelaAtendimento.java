@@ -4,6 +4,7 @@ import barbershop.controlador.CIH_Atendimento;
 import barbershop.controlador.CIH_Cliente;
 import barbershop.modelo.Cliente;
 import barbershop.modelo.Servico;
+import barbershop.servico.ServicoCliente;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,7 +15,7 @@ public class JanelaAtendimento extends javax.swing.JFrame {
     public JanelaAtendimento() {
         initComponents();
         preecnherComboBoxServico();
-        preecnherComboBoxClientes();
+        ServicoCliente.preecnherComboBoxClientes(jComboBoxClientes);
         this.setLocationRelativeTo(null);
     }
 
@@ -188,19 +189,7 @@ public class JanelaAtendimento extends javax.swing.JFrame {
         }
     }
     
-    
-    private void preecnherComboBoxClientes(){
-        jComboBoxClientes.removeAllItems();
-        try {
-            List <Cliente> result = CIH_Atendimento.preencherComboBoxCliente();
-            for(Cliente c : result){
-                jComboBoxClientes.addItem(c.nome);
-            }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(JanelaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
